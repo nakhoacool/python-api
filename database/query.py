@@ -1,9 +1,11 @@
 from mysql.connector import MySQLConnection, Error, cursor
 from config import read_config
 
-def query_with_fetchone():
+def query_with_fetchone(id):
     cursor = None
     conn = None
+
+    params = (id,)
 
     try:
         config= read_config()
@@ -11,16 +13,23 @@ def query_with_fetchone():
         # cursor to interact with the database
         cursor = conn.cursor()
 
-        cursor.execute("SELECT * FROM books")
+        cursor.execute("SELECT * FROM books WHERE id = %s", params=params)
 
+        data = []
         #Fetch the first row
         row = cursor.fetchone()
         while row is not None:
-            print(row)
+            data.append({
+                'id': row[0],
+                'title': row[1],
+                'isbn': row[2]
+            })
             row= cursor.fetchone()
+        
+        return data
             
     except Error as e:
-        print (e)
+        return e
     
     finally:
         if cursor:
@@ -74,12 +83,16 @@ def query_with_fetchmany(page_number=1, page_size=10):
         rows = []
 
         for row in iter_row(cursor, page_size):
-            rows.append(row)
+            rows.append({
+                'id': row[0],
+                'title': row[1],
+                'isbn': row[2]
+            })
         
         return rows
 
     except Error as e:
-        print(e)
+        return e
     
     finally:
         conn.close()

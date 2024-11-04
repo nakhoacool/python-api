@@ -24,9 +24,23 @@ functions:
   listBooks:
     handler: functions/books/list_books.handler
     events:
-      - http:
-          path: books
+      - httpApi:
+          path: /books
           method: get
+  
+  getBook:
+    handler: functions/books/get_book_by_id.handler
+    events:
+      - httpApi:
+          path: /books/{bookId}
+          method: get
+  
+  createBook:
+    handler: functions/books/create_book.handler
+    events:
+      - httpApi:
+          path: /books
+          method: post
 
 plugins:
   - serverless-python-requirements

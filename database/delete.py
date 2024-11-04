@@ -14,7 +14,7 @@ def delete_book(book_id):
                 affected_row = cursor.rowcount
             conn.commit()
     except Error as e:
-        print(e)
+        return e
     
     return affected_row
 

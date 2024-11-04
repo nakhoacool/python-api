@@ -16,7 +16,7 @@ def insert_book(title, isbn):
             conn.commit()
         return book_id
     except Error as e:
-        print(e)
+        return e
 
 def insert_books(books):
     query = "INSERT INTO books(title,isbn) VALUES(%s,%s)"

@@ -15,7 +15,7 @@ def update_book(book_id, title):
                 affected_rows = cursor.rowcount
             conn.commit()
     except Error as e:
-        print(e)
+        return e
     
     return affected_rows
 
