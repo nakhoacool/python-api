@@ -1,4 +1,7 @@
+import sys
+import os
 from mysql.connector import MySQLConnection, Error
+sys.path.append(os.path.dirname(os.path.dirname(__file__)) + "/config")
 from config import read_config
 
 def insert_book(title, isbn):
