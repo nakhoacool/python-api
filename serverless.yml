@@ -1,0 +1,33 @@
+service: books
+
+provider:
+  name: aws
+  runtime: python3.11
+  timeout: 900
+
+package:
+  exclude:
+    - .gitignore
+    - .git/**
+    - .vscode/**
+    - __pycache__/**
+    - node_modules/**
+    - venv/**
+    - package-lock.json
+    - package.json
+
+custom:
+  serverless-offline:
+    httpPort: 8888
+
+functions:
+  listBooks:
+    handler: functions/books/handler.list_books
+    events:
+      - http:
+          path: books
+          method: get
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline

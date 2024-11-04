@@ -1,11 +1,15 @@
+import sys
+import os
 from mysql.connector import MySQLConnection, Error, cursor
+sys.path.append(os.path.dirname(os.path.dirname(__file__)) + "/config")
 from config import read_config
 
-def query_with_fetchone(config):
+def query_with_fetchone():
     cursor = None
     conn = None
 
     try:
+        config= read_config()
         conn = MySQLConnection(**config)
         # cursor to interact with the database
         cursor = conn.cursor()
@@ -27,8 +31,9 @@ def query_with_fetchone(config):
         if conn:
             conn.close()
 
-def query_with_fetchall(config):
+def query_with_fetchall():
     try:
+        config= read_config()
         conn = MySQLConnection(**config)
         
         cursor = conn.cursor()
@@ -59,15 +64,20 @@ def iter_row(cursor: cursor.MySQLCursor, size):
         for row in rows:
             yield row
 
-def query_with_fetchmany(config):
+def query_with_fetchmany():
     try:
+        config= read_config()
         conn = MySQLConnection(**config)
         cursor = conn.cursor()
 
         cursor.execute('SELECT * FROM books')
 
+        rows = []
+
         for row in iter_row(cursor, 10):
-            print(row)
+            rows.append(row)
+        
+        return rows
 
     except Error as e:
         print(e)
@@ -77,10 +87,10 @@ def query_with_fetchmany(config):
         cursor.close()
 
 if __name__ == '__main__':
-    config= read_config()
 
-    # query_with_fetchone(config)
+    # query_with_fetchone()
 
-    #query_with_fetchall(config=config)
+    #query_with_fetchall()
 
-    query_with_fetchmany(config)
+    data = query_with_fetchmany()
+    print(data)
