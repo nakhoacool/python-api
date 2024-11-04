@@ -22,7 +22,7 @@ custom:
 
 functions:
   listBooks:
-    handler: functions/books/handler.list_books
+    handler: functions/books/list_books.handler
     events:
       - http:
           path: books

@@ -64,17 +64,19 @@ def iter_row(cursor: cursor.MySQLCursor, size):
         for row in rows:
             yield row
 
-def query_with_fetchmany():
+def query_with_fetchmany(page_number=1, page_size=10):
     try:
         config= read_config()
         conn = MySQLConnection(**config)
         cursor = conn.cursor()
 
-        cursor.execute('SELECT * FROM books')
+        offset = (page_number - 1) * page_size
+
+        cursor.execute('SELECT * FROM books LIMIT %s, %s', (offset, page_size))
 
         rows = []
 
-        for row in iter_row(cursor, 10):
+        for row in iter_row(cursor, page_size):
             rows.append(row)
         
         return rows
@@ -92,5 +94,8 @@ if __name__ == '__main__':
 
     #query_with_fetchall()
 
-    data = query_with_fetchmany()
+    page_number = 1
+    page_size = 10
+
+    data = query_with_fetchmany(page_number=page_number, page_size=page_size)
     print(data)

@@ -1,1 +1,2 @@
 mysql-connector-python
+aws-lambda-typing
