@@ -1,7 +1,4 @@
-import sys
-import os
 from mysql.connector import MySQLConnection, Error, cursor
-sys.path.append(os.path.dirname(os.path.dirname(__file__)) + "/config")
 from config import read_config
 
 def query_with_fetchone():

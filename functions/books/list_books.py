@@ -1,9 +1,5 @@
 import json
-import os
-import sys
 from aws_lambda_typing import events
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))) + "/database")
 from database.query import query_with_fetchmany
 
 def handler(event: events.APIGatewayProxyEventV2, context):
