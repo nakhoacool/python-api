@@ -1,5 +1,7 @@
-from mysql.connector import MySQLConnection, Error
+from mysql.connector import Error, MySQLConnection
+
 from config import read_config
+
 
 def delete_book(book_id):
     config = read_config()
@@ -15,9 +17,10 @@ def delete_book(book_id):
             conn.commit()
     except Error as e:
         return e
-    
+
     return affected_row
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     affected_rows = delete_book(37)
-    print(f'Number of affected rows: {affected_rows}')
+    print(f"Number of affected rows: {affected_rows}")

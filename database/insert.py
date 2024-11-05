@@ -1,9 +1,10 @@
-from mysql.connector import MySQLConnection, Error
+from mysql.connector import Error, MySQLConnection
+
 from config import read_config
 
+
 def insert_book(title, isbn):
-    query = "INSERT INTO books(title,isbn) " \
-            "VALUES(%s,%s)"
+    query = "INSERT INTO books(title,isbn) " "VALUES(%s,%s)"
     args = (title, isbn)
     book_id = None
 
@@ -11,12 +12,13 @@ def insert_book(title, isbn):
         config = read_config()
         with MySQLConnection(**config) as conn:
             with conn.cursor() as cursor:
-                cursor.execute(query,args)
+                cursor.execute(query, args)
                 book_id = cursor.lastrowid
             conn.commit()
         return book_id
     except Error as e:
         return e
+
 
 def insert_books(books):
     query = "INSERT INTO books(title,isbn) VALUES(%s,%s)"
@@ -30,7 +32,8 @@ def insert_books(books):
     except Error as e:
         print(e)
 
-if __name__ == '__main__':
-    insert_book('A Sudden Light', '9712374172147')
-    books = [('The Martian', '9780804139021'), ('Ready Player One', '9780307887443')]
+
+if __name__ == "__main__":
+    insert_book("A Sudden Light", "9712374172147")
+    books = [("The Martian", "9780804139021"), ("Ready Player One", "9780307887443")]
     insert_books(books)
