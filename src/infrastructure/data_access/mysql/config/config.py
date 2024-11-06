@@ -1,12 +1,14 @@
 from configparser import ConfigParser
+import os
 
-
-def read_config(filename="config/app.ini", section="mysql"):
+def read_config(filename="app.ini", section="mysql"):
     # Create a ConfigParser object to handle INI file parsing
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    filepath = os.path.join(current_dir,filename)
     config = ConfigParser()
 
     # Read the specified INI configuration file
-    config.read(filename)
+    config.read(filepath)
 
     # Empty dictionary to store config data
     data = {}

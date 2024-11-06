@@ -3,7 +3,6 @@ service: books
 provider:
   name: aws
   runtime: python3.11
-  timeout: 900
 
 package:
   exclude:
@@ -22,28 +21,28 @@ custom:
 
 functions:
   listBooks:
-    handler: functions/books/list_books.handler
+    handler: src/functions/books/list_books_handler.handler
     events:
       - httpApi:
           path: /books
           method: GET
   
   getBook:
-    handler: functions/books/get_book_by_id.handler
+    handler: src/functions/books/get_book_by_id_handler.handler
     events:
       - httpApi:
           path: /books/{bookId}
           method: GET
   
   createBook:
-    handler: functions/books/create_book.handler
+    handler: src/functions/books/create_book_handler.handler
     events:
       - httpApi:
           path: /books
           method: POST
   
   updateBook:
-    handler: functions/books/update_book.handler
+    handler: src/functions/books/update_book_handler.handler
     events:
       - httpApi:
           path: /books/{bookId}
@@ -53,7 +52,7 @@ functions:
           method: PATCH
   
   deleteBook:
-    handler: functions/books/delete_book.handler
+    handler: src/functions/books/delete_book_handler.handler
     events:
       - httpApi:
           path: /books/{bookId}
